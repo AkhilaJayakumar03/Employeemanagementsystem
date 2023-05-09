@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <style>
+         .navbar{
+             background-color:rgb(1, 1, 28);
+            }
+
+            #h{
+        color:white;
+      }
+
+ #z{
+     text-decoration: none;
+     color:black
+    }
+
+   .k{
+    height:820px;
+   }
+.nav-link{
+  color:white;
+}
+h5{
+  padding: 10px;
+  font-size:x-small;
+  font: 1em sans-serif;
+}
+.l{
+  margin-left: 80px;
+}
+
+</style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/4f163060e5.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin profile</title>
+</head>
+<body style="background-color:whitesmoke;">
+    <div class="container-fluid k">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg fixed-top ">
+                <div class="container-fluid">
+                  <h1 class="navbar-brand"  id="h">&nbsp;EMS</h1>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="color:white"><i class="fa-solid fa-bars"></i></span>
+                  </button>
+                  <div class="d-flex">
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                              <a class="nav-link text-light" href="http://127.0.0.1:8000/employeeapp/adminprofile/">Home</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Employee
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/empdetails/">View employee</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/addemployee/">Add employee</a></li>
+
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Attendence
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/attendancedetails/">View Attendence</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/attend/">Add Attendence</a></li>
+
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Task
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/taskdetails/">View Task</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/addtask/">Add Task</a></li>
+
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Shift
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/shiftdetails/">View Shift</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/addshift/">Add Shift</a></li>
+
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Payroll
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/payrolldetails/">View Payroll</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/addpayroll/">Add Payroll</a></li>
+
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                 Documents
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/docdetails/">View Documents</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/doc/">Add Documents</a></li>
+
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                 Leave
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/leavestatus/">View Leaves</a></li>
+                                </ul>
+                              </li>
+                                   <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                 Bio data
+                                </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/biodetails/">View Bio data</a></li>
+                                </ul>
+                              </li>
+                              <li class="nav-item dropdown">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                 Notice
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/noticedetails/">View Notice</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/notice/">Add Notice</a></li>
+                                </ul>
+                              </li>
+                            <li class="nav-item">
+                              <a class="nav-link text-light" href="http://127.0.0.1:8000/employeeapp/adminlogout/">Logout</a>
+                            </li>
+                          </ul>
+                      </div>
+                      </div>
+                 </div>
+        </nav>
+        </div> <br><br><br><br><br>
+     <div class="container-fluid">
+        <center>
+        <div class="row">
+<div class="col">
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'employeeapp/images/epicon.jpeg' %}"  height="200px" width="100px" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h3 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Total Employees</h3>
+              <h1 class="card-title"><a href="http://127.0.0.1:8000/employeeapp/empdetails/" class="btn"><b style="font-size:30px;">{{z}}</b></a></h1>
+                <p style="float:left;color:green"><b>Active {{u}}</b></p>
+                <p style="float:right;color:red"><b>Inactive {{l}}</b></p>
+
+            </div>
+          </div>
+     </div>
+     <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'employeeapp/images/task.jpeg' %}" height="200px" width="100px" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h3 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Total Task</h3>
+                <h1 class="card-title"><a href="http://127.0.0.1:8000/employeeapp/taskdetails/" class="btn"><b style="font-size:30px;">{{h}}</b></a></h1>
+                <p style="float:left;color:green"><b>Submitted {{x}}</b></p>
+                <p style="float:right;color:red"><b>Pending {{k}}</b></p>
+
+            </div>
+          </div>
+     </div>
+     <div class="col">
+        <div class="card" style="width: 18rem;">
+            <img src="{% static 'employeeapp/images/leave.jpeg' %}" height="200px" width="100px" class="card-img-top p-3" alt="...">
+            <div class="card-body">
+                <h3 style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif">Total Leaves</h3>
+                <h1 class="card-title"><a href="http://127.0.0.1:8000/employeeapp/leavestatus/" class="btn"><b style="font-size:30px;">{{a}}</b></a></h1>
+                <p style="float:right;color:red"><b>Pending {{c}}</b></p>
+                <p style="float:left;color:green"><b>Approved {{d}}</b></p>
+            </div>
+          </div>
+     </div>
+    </div>
+</center>
+<center>
+<div class="row">
+<div class="col-lg-4 col-md-8 col-sm-12">
+<div class="card shadow m-5" style="background-color:#aaffaa;">
+<div class="card-body btn">
+<h4 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Add Employee</h4><br>
+ <a href="http://127.0.0.1:8000/employeeapp/addemployee/" style="text-decoration:none;color:black"><i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+</div>
+</div>
+</div>
+<br>
+<div class="col-lg-4 col-md-8 col-sm-12">
+  <div class="card shadow m-5" style="background-color:skyblue;">
+  <div class="card-body btn">
+  <h4 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Add Task</h4><br>
+   <a href="http://127.0.0.1:8000/employeeapp/addtask/" style="text-decoration:none;color:black"> <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+  </div>
+  </div>
+  </div>
+    <div class="col-lg-4 col-md-8 col-sm-12">
+<div class="card shadow m-5" style="background-color:#ffa180;">
+<div class="card-body btn">
+<h4 style="font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;">Add Attendence</h4><br>
+ <a href="http://127.0.0.1:8000/employeeapp/attend/" style="text-decoration:none;color:black"> <i class="fa-solid fa-circle-plus fa-2xl"></i></a>
+</div>
+</div>
+</div>
+</div>
+</center>
+    </div><hr>
+    <div>
+      <center>
+          <span><a href="http://127.0.0.1:8000/employeeapp/adminprofile/" style="color:rgb(1, 1, 28);"><i class="l fa-solid fa-house fa-1x"><h5 style="float:right;font-family:cursive;">Home</h5></i></a><a href="http://127.0.0.1:8000/employeeapp/empdetails/" style="color:rgb(1, 1, 28);"><i class="l fa-solid fa-users fa-1x"><h5 style="float:right;font-family:cursive;">Employees</h5></i></a><a href="http://127.0.0.1:8000/employeeapp/payrolldetails/" style="color:rgb(1, 1, 28);"><i class="l fa-solid fa-wallet fa-1x"><h5 style="float:right;font-family:cursive;">Payroll</h5></i></a><a href="http://127.0.0.1:8000/employeeapp/attendancedetails/" style="color:rgb(1, 1, 28);"><i class="l fa-solid fa-calendar fa-1x"><h5 style="float:right;font-family:cursive;">Attendence</h5></i></a><a href="http://127.0.0.1:8000/employeeapp/taskdetails/" style="color:rgb(1, 1, 28);"><i class="l fa-solid fa-clipboard fa-1x"><h5 style="float:right;font-family:cursive;">Task</h5></i></a><a href="http://127.0.0.1:8000/employeeapp/adminlogout/" style="color:rgb(1, 1, 28);"><i class="l fa-solid fa-right-from-bracket fa-1x"><h5 style="float:right;font-family:cursive;">Logout</h5></i></a></span>
+    </center>
+    </div>
+</div>
+</body>
+</html>

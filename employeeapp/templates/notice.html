@@ -144,6 +144,13 @@
 
 <div  id="b">
          <div class="form shadow" style="background-color:whitesmoke;">
+             {% if messages %}
+    <div  class="alert alert-success">
+     {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    </div>
+{% endif %}
     <div class="mb-3">
       <h3 align="center" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif"><strong>
             Notice

@@ -2,7 +2,6 @@ from django.urls import path
 from .views import *
 
 urlpatterns=[
-    path('adminreg/',adminregister),
     path('adminlog/',adminlogin),
     path('admin/',admin),
     path('adminprofile/',adminprofile),
@@ -41,7 +40,7 @@ urlpatterns=[
     path('addshift/',addshift),
     path('shiftdetails/',shiftdetails),
     path('shiftdelete/<int:id>',shiftdelete),
-    path('task/<int:id>',task),
+    path('task/<int:id>',taskfun),
     path('addtask/',taskadd),
     path('taskdetails/',taskdetails),
     path('updatetask/<int:id>',updatetask),
@@ -54,5 +53,5 @@ urlpatterns=[
     path('emppayroll/',emppayroll),
     path('empdata/',empdata),
     path('empbio/',empbioadd),
-    path('biodetails/',empbiodetails)
+    path('biodetails/',empbiodetails),
 ]

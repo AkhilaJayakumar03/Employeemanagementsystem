@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'employeeapp',
-    'phone_field'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +130,5 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER ='p2141861@gmail.com'
 EMAIL_HOST_PASSWORD='hguppzagpaydjnve'
+
+

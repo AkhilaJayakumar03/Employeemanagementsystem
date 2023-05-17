@@ -1,7 +1,9 @@
-
+import datetime
 import os
+import time
 from django.contrib import messages
 from django.contrib.auth import logout, authenticate
+from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from.models import *
@@ -14,27 +16,6 @@ from django.core.paginator import Paginator
 def index(request):
     return render(request,'index.html')
 
-def adminregister(request):
-    if request.method=='POST':
-        username=request.POST.get('username')
-        firstname=request.POST.get('firstname')
-        lastname=request.POST.get('lastname')
-        email=request.POST.get('email')
-        password=request.POST.get('password')
-        if User.objects.filter(username=username).first():
-            messages.success(request,"username already taken")
-            return redirect(adminregister)
-        if User.objects.filter(email=email).first():
-            messages.success(request,"email already exist")
-            return redirect(adminregister)
-        request.session['email'] = email
-        user_obj=User(username=username,first_name=firstname,last_name=lastname,email=email)
-        user_obj.set_password(password)
-        user_obj.save()
-        profile_obj=profile.objects.create(user=user_obj)
-        profile_obj.save()
-        return redirect(adminlogin)
-    return render(request,"adminregister.html")
 
 def adminlogin(request):
     if request.method=='POST':
@@ -42,9 +23,8 @@ def adminlogin(request):
         password=request.POST.get("password")
         request.session['username'] = username
         user_obj=User.objects.filter(username=username).first()
-        request.session['id'] = user_obj.id
         if user_obj is None:
-            messages.success(request,'user not found')
+            messages.success(request,'user not found!')
             return redirect(adminlogin)
         user=authenticate(username=username,password=password)
         if user is None:
@@ -64,9 +44,9 @@ def adminprofile(request):
     z = employeeaddmodel.objects.all().count()
     u = employeeaddmodel.objects.filter(status='Active').values().count()
     l = employeeaddmodel.objects.filter(status='Inactive').values().count()
-    h= taskmodel.objects.all().count()
-    x = taskmodel.objects.filter(status='Submitted').values().count()
-    k = taskmodel.objects.filter(status='Pending').values().count()
+    h= taskmode.objects.all().count()
+    x = taskmode.objects.filter(status='Submitted').values().count()
+    k = taskmode.objects.filter(status='Pending').values().count()
     a = empleave.objects.all().count()
     c=empleave.objects.filter(response='Pending').values().count()
     d = empleave.objects.filter(response='Approved').values().count()
@@ -103,7 +83,6 @@ def send_mail_reg(em,eid,ps):
     # f formatter:the expressions are replaced by values
     email_from = EMAIL_HOST_USER  # from
     recipient = [em]  # to
-    # inbuilt function
     send_mail(subject, message, email_from, recipient)
 
 def empdetails(request):
@@ -171,12 +150,14 @@ def updateemp(request,id):
         a.department = request.POST.get('department')
         a.status=request.POST.get('status')
         a.save()
+        messages.success(request, "employee detail updated...")
         return redirect(empdetails)
     return render(request,"updateemployee.html",{'a':a,'im':im})
 
 def empdelete(request,id):
     a=employeeaddmodel.objects.get(id=id)
     a.delete()
+    messages.success(request, "employee deleted...")
     return redirect(empdetails)
 
 def emplogin(request):
@@ -185,7 +166,7 @@ def emplogin(request):
         if a.is_valid():
             ed = a.cleaned_data["empid"]
             ps = a.cleaned_data["password"]
-            b = employeeaddmodel.objects.all()  # fetchall
+            b = employeeaddmodel.objects.all()
             request.session['empid']=ed
             for i in b:
                 if ed == i.empid and ps == i.password:
@@ -232,7 +213,7 @@ def attend(request):
 def addattendence(request,id):
     a=employeeaddmodel.objects.get(id=id)
     if attendencemodel.objects.filter(empid=a.empid):
-        messages.success(request,"already added.....")
+        messages.success(request,"Already added.....")
         return redirect(attendencedetails)
     else:
         if request.method == 'POST':
@@ -240,6 +221,7 @@ def addattendence(request,id):
             presentdays = request.POST.get('presentdays')
             b = attendencemodel(employeeid=id,empfname=a.empfname,emplname=a.emplname,department=a.department,empid=a.empid,empimg=a.empimg,totaldays=totaldays, presentdays=presentdays)
             b.save()
+            messages.success(request, "Attendence added.....")
             return redirect(attendencedetails)
         return render(request, "addattend.html")
 
@@ -310,19 +292,49 @@ def attendencedetails(request):
 def attdelete(request,id):
     a=attendencemodel.objects.get(id=id)
     a.delete()
+    messages.success(request, "attendence detail deleted...")
     return redirect(attendencedetails)
 
 
 def leave(request):
     ed = request.session['empid']
     if request.method=='POST':
-        fromdate=request.POST.get('fromdate')
-        todate = request.POST.get('todate')
+        fromdate =request.POST.get('fromdate')
+        todate= request.POST.get('todate')
         subject=request.POST.get('subject')
         message=request.POST.get('message')
-        b=empleave(empid=ed,fromdate=fromdate,todate=todate,subject=subject,message=message)
-        b.save()
-        return redirect(empleavestatus)
+        if empleave.objects.filter(empid=ed, fromdate=fromdate, todate=todate):
+            messages.success(request, "already applied")
+            return redirect(leave)
+        else:
+            c = empleave.objects.filter(empid=ed)
+            for i in c:
+                x = str(i.fromdate)
+                y = str(fromdate)
+                xx = str(i.todate)
+                yy = str(todate)
+                oldfd = time.strptime(x, '%Y-%m-%d')
+                newfd = time.strptime(y, '%Y-%m-%d')
+                oldtd = time.strptime(xx, '%Y-%m-%d')
+                newtd = time.strptime(yy, '%Y-%m-%d')
+                today=str(datetime.date.today())
+                todaydate=time.strptime(today,'%Y-%m-%d')
+                if newfd < todaydate :
+                    messages.success(request, "Invalid date!")
+                    return redirect(leave)
+                elif newfd > newtd or newtd <newfd:
+                    messages.success(request, "Date dispatch")
+                    return redirect(leave)
+                elif newfd == newtd:
+                    messages.success(request, "Both dates are same")
+                    return redirect(leave)
+                elif oldfd <= newfd <= oldtd :
+                    messages.success(request, "already applied")
+                    return redirect(leave)
+            b = empleave(empid=ed, fromdate=fromdate, todate=todate, subject=subject, message=message)
+            b.save()
+            messages.success(request, "Leave applied wait for admin response")
+            return redirect(empleavestatus)
     return render(request,"leave.html")
 
 
@@ -357,6 +369,7 @@ def empleavestatus(request):
 def leavedelete(request,id):
     a=empleave.objects.get(id=id)
     a.delete()
+    messages.success(request, "leave deleted...")
     return redirect(empleavestatus)
 
 def leavestatus(request):
@@ -393,6 +406,7 @@ def updateleave(request,id):
         a.response=request.POST.get('response')
         a.empid=request.POST.get('empid')
         a.save()
+        messages.success(request, "leave updated...")
         return redirect(leavestatus)
     return render(request,"updateleave.html",{'a':a})
 
@@ -410,11 +424,12 @@ def payroll(request,id):
         month=request.POST.get('month')
         basicsalary=request.POST.get('basicsalary')
         allowance=request.POST.get('allowance')
-        b=payrollmodel(employeeid=id,empfname=a.empfname,emplname=a.emplname,department=a.department,empid=a.empid,empimg=a.empimg,month=month,basicsalary=basicsalary,allowance=allowance)
+        b=payrollmodel(employeeid=id,department=a.department,empid=a.empid,month=month,basicsalary=basicsalary,allowance=allowance)
         if payrollmodel.objects.filter(empid=a.empid,month=b.month):
             messages.success(request, "already added...")
             return redirect(payrolldetail)
         b.save()
+        messages.success(request, "payroll added...")
         return redirect(payrolldetail)
     return render(request,"payroll.html",{'a':a})
 
@@ -475,16 +490,26 @@ def payrolldetail(request):
 def payrolldelete(request,id):
     a=payrollmodel.objects.get(id=id)
     a.delete()
+    messages.success(request, "payroll deleted...")
     return redirect(payrolldetail)
 
 def notice(request):
+    e = datetime.date.today()
+    f = str(e)
+    g = time.strptime(f, '%Y-%m-%d')
     if request.method == 'POST':
         date=request.POST.get('date')
         title=request.POST.get('title')
         description=request.POST.get('description')
         notes=request.POST.get('notes')
+        k = str(date)
+        dt = time.strptime(k, '%Y-%m-%d')
+        if dt < g:
+            messages.success(request, "Invalid date!")
+            return redirect(notice)
         b=noticemodel(date=date,title=title,description=description,notes=notes)
         b.save()
+        messages.success(request, "Notice added")
         return redirect(noticedetails)
     return render(request,"notice.html")
 
@@ -513,6 +538,7 @@ def noticedetails(request):
 def noticedelete(request,id):
     a=noticemodel.objects.get(id=id)
     a.delete()
+    messages.success(request, "notice deleted...")
     return redirect(noticedetails)
 
 def noticeempdetails(request):
@@ -573,6 +599,7 @@ def documents(request,id):
             appraisalorder=request.FILES['appraisalorder']
             b = documentmodel(employeeid=id,empfname=a.empfname, emplname=a.emplname, department=a.department, empid=a.empid,empimg=a.empimg,appointorder=appointorder,joinorder=joinorder,appraisalorder=appraisalorder)
             b.save()
+            messages.success(request, "documents uploaded")
             return redirect(docdetails)
         return render(request,"adddocuments.html",{'a':a})
 
@@ -606,6 +633,7 @@ def docdetails(request):
 def docdelete(request,id):
     a=documentmodel.objects.get(id=id)
     a.delete()
+    messages.success(request, "document deleted...")
     return redirect(docdetails)
 
 def addshift(request):
@@ -631,13 +659,24 @@ def addshift(request):
 
 
 def shift(request,id):
+    e = datetime.date.today()
+    f = str(e)
+    g = time.strptime(f, '%Y-%m-%d')
     a = employeeaddmodel.objects.get(id=id)
     if request.method == 'POST':
-        empid=request.POST.get('empid')
         shiftdate=request.POST.get('shiftdate')
         shifttime=request.POST.get('shifttime')
-        b = shiftmodel(employeeid=id,empid=empid,shiftdate=shiftdate,shifttime=shifttime)
+        k = str(shiftdate)
+        sd = time.strptime(k, '%Y-%m-%d')
+        if sd <= g:
+            messages.success(request, "Invalid date!")
+            return redirect(addshift)
+        b = shiftmodel(employeeid=id,empid=a.empid,shiftdate=shiftdate,shifttime=shifttime)
+        if shiftmodel.objects.filter(empid=a.empid,shiftdate=b.shiftdate):
+            messages.success(request, "Already added...")
+            return redirect(shiftdetails)
         b.save()
+        messages.success(request, "Shift scheduled...")
         return redirect(shiftdetails)
     return render(request,'shiftadd.html',{'a':a})
 
@@ -662,6 +701,7 @@ def shiftdetails(request):
 def shiftdelete(request,id):
     a=shiftmodel.objects.get(id=id)
     a.delete()
+    messages.success(request, "shift deleted...")
     return redirect(shiftdetails)
 
 def taskadd(request):
@@ -686,22 +726,31 @@ def taskadd(request):
     return render(request,"taskadd.html",{'mylist':mylist,'a':a})
 
 
-def task(request,id):
+def taskfun(request,id):
+    e = datetime.date.today()
+    f = str(e)
+    g = time.strptime(f, '%Y-%m-%d')
     a = employeeaddmodel.objects.get(id=id)
     if request.method == 'POST':
-        empid = request.POST.get('empid')
-        task = request.POST.get('task')
-        assigndate = request.POST.get('assigndate')
-        submitdate= request.POST.get('submitdate')
-        b = taskmodel(employeeid=id,empid=empid, task=task,assigndate=assigndate,submitdate=submitdate)
+        task=request.POST.get("task")
+        submitdate= request.POST.get("submitdate")
+        k = str(submitdate)
+        sd = time.strptime(k, '%Y-%m-%d')
+        if sd < g :
+            messages.success(request, "Invalid date!")
+            return redirect(taskadd)
+        b = taskmode(employeeid=id, empid=a.empid, task=task, submitdate=submitdate)
+        if taskmode.objects.filter(empid=a.empid, submitdate=b.submitdate):
+            messages.success(request, "Already assigned...")
+            return redirect(taskdetails)
         b.save()
+        messages.success(request, "Task assigned")
         return redirect(taskdetails)
     return render(request,"addtask.html",{'a':a})
 
 
-
 def taskdetails(request):
-    a = taskmodel.objects.all()
+    a = taskmode.objects.all()
     empid = []
     tsk=[]
     asdt=[]
@@ -709,7 +758,7 @@ def taskdetails(request):
     stus=[]
     eid=[]
     for i in a:
-        id=i.id
+        id = i.id
         eid.append(id)
         ed = i.empid
         empid.append(ed)
@@ -726,35 +775,27 @@ def taskdetails(request):
 
 
 def updatetask(request,id):
-    a=taskmodel.objects.get(id=id)
+    a=taskmode.objects.get(id=id)
     if request.method == 'POST':
         a.task = request.POST.get('task')
-        a.assigndate = request.POST.get('assigndate')
         a.submitdate = request.POST.get('submitdate')
         a.status = request.POST.get('status')
         a.save()
+        messages.success(request, "Task detail updated...")
         return redirect(taskdetails)
     return render(request,"updatetask.html",{'a':a})
 
-def updateemptask(request,id):
-    a=taskmodel.objects.get(id=id)
-    if request.method == 'POST':
-        a.task = request.POST.get('task')
-        a.assigndate = request.POST.get('assigndate')
-        a.submitdate = request.POST.get('submitdate')
-        a.status = request.POST.get('status')
-        a.save()
-        return redirect(emptask)
-    return render(request,"empupdatetask.html",{'a':a})
+
 
 def taskdelete(request,id):
-    a=taskmodel.objects.get(id=id)
+    a=taskmode.objects.get(id=id)
     a.delete()
+    messages.success(request, "task deleted...")
     return redirect(taskdetails)
 
 def emptask(request):
     epid = request.session['id']
-    b = taskmodel.objects.all()
+    b = taskmode.objects.all()
     empid = []
     tsk = []
     asdt = []
@@ -780,6 +821,16 @@ def emptask(request):
     mylist = zip(empid,tsk,asdt,sbdt,stus,eid,employeeid)
     return render(request,"emptaskdetails.html",{'mylist':mylist,'epid':epid})
 
+def updateemptask(request,id):
+    a=taskmode.objects.get(id=id)
+    if request.method == 'POST':
+        a.task = request.POST.get('task')
+        a.submitdate = request.POST.get('submitdate')
+        a.status = request.POST.get('status')
+        a.save()
+        messages.success(request, "status updated...")
+        return redirect(emptask)
+    return render(request,"empupdatetask.html",{'a':a})
 
 def empshift(request):
     epid = request.session['id']
@@ -903,8 +954,12 @@ def empbioadd(request):
         address = request.POST.get("address")
         education = request.POST.get("education")
         nationality = request.POST.get("nationality")
+        if empbiodata.objects.filter(empid=ed):
+            messages.success(request, "Already added bio data")
+            return redirect(empbioadd)
         b=empbiodata(empid=ed,name=name,fathername=fathername,dob=dob,email=email,mobile=mobile,address=address,education=education,nationality=nationality)
         b.save()
+        messages.success(request, "Bio data addedd")
         return redirect(empprofile)
     return render(request,"addbio.html")
 

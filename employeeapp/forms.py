@@ -47,7 +47,3 @@ class emplogform(forms.Form):
 
 
 
-
-
-
-

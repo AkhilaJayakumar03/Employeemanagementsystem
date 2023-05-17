@@ -24,24 +24,36 @@
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" style="color:white"><i class="fa-solid fa-bars"></i></span>
                   </button>
-
-                    <div class="d-flex">
+<div class="d-flex">
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link text-light" href="http://127.0.0.1:8000/employeeapp/emplogout/">Logout&nbsp;&nbsp;<i class="fa-solid fa-right-from-bracket"></i></a>
-                            </li>
-                          </ul>
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                             <li class="nav-item dropdown" style="margin-right:80px;">
+                                <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+                                 Profile
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/empdata/">View profile</a></li>
+                                  <li><a class="dropdown-item" href="http://127.0.0.1:8000/employeeapp/emplogout/">Logout&nbsp;&nbsp;<i class="fa-solid fa-right-from-bracket"></i></a></li>
+                                </ul>
+                              </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </nav>
         </div>
-<br><br><br>
+        <br><br><br>
 <div class="container">
   <h2 align="center" style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">Leave status</h2>
 </div>
 <div class="shadow m-5 p-5" style="overflow: auto">
+        {% if messages %}
+    <div  class="alert alert-success">
+     {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    </div>
+{% endif %}
 <table class="table table-hover table-condensed table-striped table-bordered">
       <thead>
         <tr>

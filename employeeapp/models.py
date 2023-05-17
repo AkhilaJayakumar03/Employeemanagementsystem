@@ -1,12 +1,10 @@
-from django.contrib.auth.models import User
+
 from django.db import models
-from django.core.validators import MinValueValidator
-import datetime
+
 # Create your models here.
 
 
-class profile(models.Model):
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
+
 
 
 
@@ -68,8 +66,8 @@ class empleave(models.Model):
         ('Declined','Declined')
     )
     empid = models.CharField(max_length=10)
-    fromdate=models.CharField(max_length=20)
-    todate=models.CharField(max_length=20)
+    fromdate=models.DateField()
+    todate=models.DateField()
     subject=models.CharField(max_length=100)
     message=models.CharField(max_length=200)
     response = models.CharField(max_length=50, choices=Response, default='Pending')
@@ -93,9 +91,6 @@ class payrollmodel(models.Model):
            ('December', 'December'),
            )
     employeeid = models.IntegerField()
-    empimg = models.ImageField()
-    empfname = models.CharField(max_length=50)
-    emplname = models.CharField(max_length=50)
     department = models.CharField(max_length=50)
     empid = models.CharField(max_length=10)
     basicsalary=models.IntegerField()
@@ -103,7 +98,7 @@ class payrollmodel(models.Model):
     month=models.CharField(max_length=50, choices=Month)
 
     def __str__(self):
-        return (self.empfname) + (self.emplname)
+        return (self.empid)
 
 class noticemodel(models.Model):
     date=models.CharField(max_length=20)
@@ -135,19 +130,17 @@ class shiftmodel(models.Model):
     def __str__(self):
         return str(self.empid)
 
-class taskmodel(models.Model):
+class taskmode(models.Model):
     Response=(
         ('Pending','Pending'),
         ('Submitted','Submitted')
     )
-
     empid=models.CharField(max_length=10)
     task=models.CharField(max_length=250)
-    assigndate=models.DateField()
-    submitdate=models.DateField()
+    assigndate=models.DateField(auto_now_add=True)
+    submitdate=models.CharField(max_length=50)
     status=models.CharField(max_length=50, choices=Response, default='Pending')
     employeeid=models.IntegerField()
-
 
     def __str__(self):
         return str(self.empid)

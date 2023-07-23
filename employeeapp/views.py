@@ -738,11 +738,11 @@ def taskfun(request,id):
         sd = time.strptime(k, '%Y-%m-%d')
         if sd < g :
             messages.success(request, "Invalid date!")
-            return redirect(taskadd)
+            return redirect(taskfun,id)
         b = taskmode(employeeid=id, empid=a.empid, task=task, submitdate=submitdate)
         if taskmode.objects.filter(empid=a.empid, submitdate=b.submitdate):
             messages.success(request, "Already assigned...")
-            return redirect(taskdetails)
+            return redirect(taskfun,id)
         b.save()
         messages.success(request, "Task assigned")
         return redirect(taskdetails)
@@ -775,11 +775,19 @@ def taskdetails(request):
 
 
 def updatetask(request,id):
+    e = datetime.date.today()
+    f = str(e)
+    g = time.strptime(f, '%Y-%m-%d')
     a=taskmode.objects.get(id=id)
     if request.method == 'POST':
         a.task = request.POST.get('task')
         a.submitdate = request.POST.get('submitdate')
         a.status = request.POST.get('status')
+        k = str(a.submitdate)
+        sd = time.strptime(k, '%Y-%m-%d')
+        if sd < g:
+            messages.success(request, "Invalid date!")
+            return redirect(updatetask,id)
         a.save()
         messages.success(request, "Task detail updated...")
         return redirect(taskdetails)

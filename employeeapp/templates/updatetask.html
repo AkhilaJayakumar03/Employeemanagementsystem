@@ -143,6 +143,13 @@
         </div> <br><br><br>
 <div  id="b">
        <div class="form shadow" style="background-color:whitesmoke;">
+           {% if messages %}
+    <div  class="alert alert-secondary">
+     {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    </div>
+{% endif %}
     <div class="mb-3">
       <h3 align="center"><strong>
             Update task
